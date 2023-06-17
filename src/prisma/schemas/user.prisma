@@ -1,0 +1,318 @@
+model User {
+  uuid     String @unique @default(uuid())
+  username String @unique
+  password String
+
+  lastName   String
+  firstName  String
+  middleName String
+
+  systemRole SystemRole
+  workRole   WorkRole
+
+  profileGender      Gender?
+  profileBirthday    DateTime?
+  profileCivilStatus CivilStatus?
+  profileNationality Nationality?
+  profileAddress     String?
+
+  educationLevel        Education?
+  educationCourse       String?
+  educationYearStart    Int?
+  educationYearGraduate Int?
+  educationSchool       String?
+
+  workDepartment     Department?
+  workTitle          String?
+  workCode           String?
+  workEmploymentType EmploymentType?
+  workHireDate       DateTime?
+
+  training         Training[]
+  emergencyContact EmergencyContact[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum SystemRole {
+  ADMIN
+  USER
+}
+
+enum WorkRole {
+  EMPLOYEE
+  INTERN
+}
+
+enum Gender {
+  Female
+  Male
+  PreferNotToSay
+}
+
+enum CivilStatus {
+  Single
+  Married
+  Separated
+  Widowed
+  Annuled
+  Divorced
+}
+
+// Close this, never look back, and never open.
+enum Nationality {
+  Afghan
+  Albanian
+  Algerian
+  American
+  Andorran
+  Angolan
+  Antiguans
+  Argentinean
+  Armenian
+  Australian
+  Austrian
+  Azerbaijani
+  Bahamian
+  Bahraini
+  Bangladeshi
+  Barbadian
+  Barbudans
+  Batswana
+  Belarusian
+  Belgian
+  Belizean
+  Beninese
+  Bhutanese
+  Bolivian
+  Bosnian
+  Brazilian
+  British
+  Bruneian
+  Bulgarian
+  Burkinabe
+  Burmese
+  Burundian
+  Cambodian
+  Cameroonian
+  Canadian
+  CapeVerdean
+  CentralAfrican
+  Chadian
+  Chilean
+  Chinese
+  Colombian
+  Comoran
+  Congolese
+  CostaRican
+  Croatian
+  Cuban
+  Cypriot
+  Czech
+  Danish
+  Djibouti
+  Dominican
+  Dutch
+  EastTimorese
+  Ecuadorean
+  Egyptian
+  Emirian
+  EquatorialGuinean
+  Eritrean
+  Estonian
+  Ethiopian
+  Fijian
+  Filipino
+  Finnish
+  French
+  Gabonese
+  Gambian
+  Georgian
+  German
+  Ghanaian
+  Greek
+  Grenadian
+  Guatemalan
+  GuineaBissauan
+  Guinean
+  Guyanese
+  Haitian
+  Herzegovinian
+  Honduran
+  Hungarian
+  IKiribati
+  Icelander
+  Indian
+  Indonesian
+  Iranian
+  Iraqi
+  Irish
+  Israeli
+  Italian
+  Ivorian
+  Jamaican
+  Japanese
+  Jordanian
+  Kazakhstani
+  Kenyan
+  KittianAndNevisian
+  Kuwaiti
+  Kyrgyz
+  Laotian
+  Latvian
+  Lebanese
+  Liberian
+  Libyan
+  Liechtensteiner
+  Lithuanian
+  Luxembourger
+  Macedonian
+  Malagasy
+  Malawian
+  Malaysian
+  Maldivian
+  Malian
+  Maltese
+  Marshallese
+  Mauritanian
+  Mauritian
+  Mexican
+  Micronesian
+  Moldovan
+  Monacan
+  Mongolian
+  Moroccan
+  Mosotho
+  Motswana
+  Mozambican
+  Namibian
+  Nauruan
+  Nepalese
+  NewZealander
+  NiVanuatu
+  Nicaraguan
+  Nigerian
+  Nigerien
+  NorthKorean
+  NorthernIrish
+  Norwegian
+  Omani
+  Pakistani
+  Palauan
+  Panamanian
+  PapuaNewGuinean
+  Paraguayan
+  Peruvian
+  Polish
+  Portuguese
+  Qatari
+  Romanian
+  Russian
+  Rwandan
+  SaintLucian
+  Salvadoran
+  Samoan
+  SanMarinese
+  SaoTomean
+  Saudi
+  Scottish
+  Senegalese
+  Serbian
+  Seychellois
+  SierraLeonean
+  Singaporean
+  Slovakian
+  Slovenian
+  SolomonIslander
+  Somali
+  SouthAfrican
+  SouthKorean
+  Spanish
+  SriLankan
+  Sudanese
+  Surinamer
+  Swazi
+  Swedish
+  Swiss
+  Syrian
+  Taiwanese
+  Tajik
+  Tanzanian
+  Thai
+  Togolese
+  Tongan
+  TrinidadianOrTobagonian
+  Tunisian
+  Turkish
+  Tuvaluan
+  Ugandan
+  Ukrainian
+  Uruguayan
+  Uzbekistani
+  Venezuelan
+  Vietnamese
+  Welsh
+  Yemenite
+  Zambian
+  Zimbabwean
+}
+
+enum Education {
+  Primary
+  Secondary
+  JuniorHighSchool
+  SeniorHighSchool
+  College
+}
+
+enum Department {
+  ADMIN
+  DEVOPS
+  FINANCE
+  HRADMIN
+  MARKETING
+  MOBILEDEV
+  SOCIAL
+  WEBDEV
+}
+
+enum EmploymentType {
+  FULLTIME
+  PARTTIME
+  ONCALL
+}
+
+model Training {
+  uuid       String   @unique @default(uuid())
+  name       String
+  date       DateTime
+  instructor String
+  nature     String
+  User       User?    @relation(fields: [userUuid], references: [uuid])
+  userUuid   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("trainings")
+}
+
+model EmergencyContact {
+  uuid          String  @unique @default(uuid())
+  lastName      String
+  firstName     String
+  middleName    String?
+  contactNumber String
+  contactEmail  String
+  relationship  String
+  User          User?   @relation(fields: [userUuid], references: [uuid])
+  userUuid      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("emergencycontacts")
+}
