@@ -1,13 +1,13 @@
 {
   "mixers": [
     {
-        "input": [
-            "src/prisma/base.prisma",
-            "src/prisma/schemas/user.prisma",
-            "src/prisma/schemas/admin.prisma",
-            "src/prisma/schemas/time.prisma"
-        ],
-        "output": "src/prisma/schema.prisma"
+      "input": [
+        "src/prisma/base.prisma",
+        "src/prisma/schemas/user.prisma",
+        "src/prisma/schemas/admin.prisma",
+        "src/prisma/schemas/time.prisma"
+      ],
+      "output": "src/prisma/schema.prisma"
     }
   ]
 }

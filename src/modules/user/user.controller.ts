@@ -4,64 +4,61 @@
  * Further reading: Developer Documentation.
  */
 
-import * as userService from "./user.service"
+import * as userService from './user.service';
 
-import { NextFunction, Request, Response } from "express";
-import { userFieldIsValid, userUuidIsValid } from "./user.validation";
-import { Field, Order } from "../../utilities/types";
-import { clientErrResponseHandler, responseHandler } from "../../utilities/responseHandler";
-import { Prisma } from "@prisma/client";
+import { NextFunction, Request, Response } from 'express';
+import { userFieldIsValid, userUuidIsValid } from './user.validation';
+import { Field, Order } from '../../utilities/types';
+import { clientErrResponseHandler, responseHandler } from '../../utilities/responseHandler';
+import { Prisma } from '@prisma/client';
 
-export const getUsers  = async (req:Request, res:Response) => {
+export const getUsers = async (req: Request, res: Response) => {
   if (userFieldIsValid(req.query.sortby as unknown as Field)) {
-    const field:Field = req.query.sortby as Field;
-    const order:Order = req.query.order as Order;
+    const field: Field = req.query.sortby as Field;
+    const order: Order = req.query.order as Order;
 
     responseHandler(res, await userService.sortUsersBy(field, order));
   } else {
     responseHandler(res, await userService.findAllUsers());
   }
-}
+};
 
 export const getUserByUuid = async (req: Request, res: Response) => {
   const uuid = req.params.uuid;
-  if (userUuidIsValid(uuid)) 
-  responseHandler(res, await userService.findUserByUuId(uuid));
-  else
-  clientErrResponseHandler(res, {error: "UUID is invalid."})
-}
+  if (userUuidIsValid(uuid)) responseHandler(res, await userService.findUserByUuId(uuid));
+  else clientErrResponseHandler(res, { error: 'UUID is invalid.' });
+};
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = await userService.createUser(req.body);
-    responseHandler(res, data, 201)
+    responseHandler(res, data, 201);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        error.message = `The ${error.name} should be unique. `
-        clientErrResponseHandler(res, {error}, 400);
+      if (error.code === 'P2002') {
+        error.message = `The ${error.name} should be unique. `;
+        clientErrResponseHandler(res, { error }, 400);
         return;
       }
     }
-    clientErrResponseHandler(res, {error}, 422);
+    clientErrResponseHandler(res, { error }, 422);
   }
   return;
-}
+};
 
 export const deleteUserByUuid = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const uuid = req.params.uuid
+    const uuid = req.params.uuid;
     const data = await userService.deleteUserByUuid(uuid);
-    responseHandler(res, data, 204)
+    responseHandler(res, data, 204);
   } catch (error) {
     clientErrResponseHandler(res, error);
   }
-}
+};
 
 export const updateUserByUuid = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    
   } catch (error) {
-    clientErrResponseHandler(res, error)
+    clientErrResponseHandler(res, error);
   }
-}
+};
