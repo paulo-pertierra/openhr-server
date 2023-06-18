@@ -1,0 +1,22 @@
+model Time {
+  id String @unique @default(uuid())
+  userId String 
+
+  recordDate String?
+  remark String
+
+  timeInAm DateTime?
+  timeOutAm DateTime?
+
+  timeInPm DateTime?
+  timeOutPm DateTime?
+
+  hoursWorked Int?
+
+  user User @relation(fields: [userId], references: [uuid], onDelete: Cascade)
+}
+
+model User {
+  uuid String @unique @default(uuid())
+  time Time[]
+}

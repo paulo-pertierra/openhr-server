@@ -12,9 +12,9 @@ model User {
 	password String 
 	lastName String 
 	firstName String 
-	middleName String 
-	systemRole SystemRole 
-	workRole WorkRole 
+	middleName String? 
+	contactEmail String 
+	contactNumber String 
 	profileGender Gender? 
 	profileBirthday DateTime? 
 	profileCivilStatus CivilStatus? 
@@ -25,15 +25,17 @@ model User {
 	educationYearStart Int? 
 	educationYearGraduate Int? 
 	educationSchool String? 
-	workDepartment Department? 
-	workTitle String? 
+	workRole WorkRole 
+	workDepartment Department 
+	workTitle String 
 	workCode String? 
-	workEmploymentType EmploymentType? 
-	workHireDate DateTime? 
+	workEmploymentType EmploymentType 
+	workHireDate DateTime 
 	training Training[] @relation(name: "TrainingToUser")
 	emergencyContact EmergencyContact[] @relation(name: "EmergencyContactToUser")
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
+	time Time[] @relation(name: "TimeToUser")
 	@@map("users")
 }
 model Training {
@@ -62,24 +64,45 @@ model EmergencyContact {
 	updatedAt DateTime @updatedAt
 	@@map("emergencycontacts")
 }
-enum SystemRole {
-	ADMIN
-	USER
+model Admin {
+	uuid String @unique @default(uuid())
+	username String @unique
+	email String @unique
+	password String 
+	lastName String 
+	firstName String 
+	middleName String 
+	@@unique([username, email])
+	@@unique([lastName, firstName, middleName])
+}
+model Time {
+	id String @unique @default(uuid())
+	userId String 
+	recordDate String? 
+	remark String 
+	timeInAm DateTime? 
+	timeOutAm DateTime? 
+	timeInPm DateTime? 
+	timeOutPm DateTime? 
+	hoursWorked Int? 
+	user User @relation(name: "TimeToUser", fields: [userId], references: [uuid], onDelete: Cascade)
 }
 enum WorkRole {
 	EMPLOYEE
 	INTERN
 }
 enum Gender {
-	Male
 	Female
+	Male
 	PreferNotToSay
 }
 enum CivilStatus {
 	Single
 	Married
-	Widowed
 	Separated
+	Widowed
+	Annuled
+	Divorced
 }
 enum Nationality {
 	Afghan

@@ -15,5 +15,5 @@ configureRoutes(app)
 app.use('*', (req, res)=> res.json({error: 'Not Found.', status: 404}).status(404))
 
 app.listen(5000, ()=> {
-  console.log(`HRNode is running at http://localhost:5000. Running in ${ process.env.HR_ENVIRONMENT || 'development'} mode.`)
+  console.log(`HRNode is running at http://localhost:5000. Running in ${ process.env.HR_ENVIRONMENT || 'unspecified'} mode.`)
 })

@@ -5,10 +5,10 @@ model User {
 
   lastName   String
   firstName  String
-  middleName String
+  middleName String?
 
-  systemRole SystemRole
-  workRole   WorkRole
+  contactEmail String
+  contactNumber String
 
   profileGender      Gender?
   profileBirthday    DateTime?
@@ -22,11 +22,12 @@ model User {
   educationYearGraduate Int?
   educationSchool       String?
 
-  workDepartment     Department?
-  workTitle          String?
+  workRole   WorkRole
+  workDepartment     Department
+  workTitle          String
   workCode           String?
-  workEmploymentType EmploymentType?
-  workHireDate       DateTime?
+  workEmploymentType EmploymentType
+  workHireDate       DateTime
 
   training         Training[]
   emergencyContact EmergencyContact[]
@@ -35,11 +36,6 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@map("users")
-}
-
-enum SystemRole {
-  ADMIN
-  USER
 }
 
 enum WorkRole {

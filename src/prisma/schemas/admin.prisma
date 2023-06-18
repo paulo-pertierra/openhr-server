@@ -1,0 +1,13 @@
+model Admin {
+  uuid     String @unique @default(uuid())
+  username String @unique
+  email String @unique
+  password String
+
+  lastName   String
+  firstName  String
+  middleName String
+
+  @@unique([username, email])
+  @@unique([lastName, firstName, middleName])
+}
