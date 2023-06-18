@@ -9,9 +9,10 @@ import * as userService from './user.service';
 
 import { NextFunction, Request, Response } from 'express';
 import { userFieldIsValid, userUuidIsValid } from './user.validation';
-import { Field, Order } from '../../utilities/types';
 import { clientErrResponseHandler, responseHandler } from '../../utilities/responseHandler';
 import { Prisma, User } from '@prisma/client';
+import type { Order } from '../../utilities/types';
+import type { Field } from './user.types';
 
 export const getUsers = async (req: Request, res: Response) => {
   if (userFieldIsValid(req.query.sortby as unknown as Field)) {

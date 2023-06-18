@@ -23,8 +23,8 @@ enum Field {
   updatedAt
 }
 
-export function userFieldIsValid(fieldInput: string, fields = Field) {
-  return Object.values(fields).includes(fieldInput as unknown as Field);
+export function userFieldIsValid(fieldInput: string) {
+  return Object.values(Field).includes(fieldInput as unknown as Field);
 }
 
 export function userUuidIsValid(uuid: string) {

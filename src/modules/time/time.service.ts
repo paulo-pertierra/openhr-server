@@ -1,10 +1,11 @@
 /**
  * This is the service. All important business-domain backend logic shall be here.
- *
  */
 
 import { prisma } from '../../utilities/databaseHandler';
 import * as dateFns from 'date-fns';
+import { Order } from '../../utilities/types';
+import { Field, OrderBy } from './time.types';
 
 export async function createTime(userId: string) {
   // Create a time record for all users at the start of the day.
@@ -90,4 +91,45 @@ export async function timeOutPm(userId: string) {
       timeOutPm: currentTime
     }
   });
+}
+
+export async function sortTimesBy(field: Field, order: Order) {
+
+  const orderBy:OrderBy = {};
+  if (orderBy.user) orderBy.user[field] = order
+  if (orderBy.date) orderBy.date = order
+
+  return await prisma.time.findMany({
+    include: {
+      user: {
+        select: {
+          lastName: true,
+          firstName: true,
+          middleName: true,
+          workDepartment: true,
+          workEmploymentType: true
+        }
+      },
+    },
+    orderBy
+  });
+}
+
+export async function getTimes() {
+  return await prisma.time.findMany({
+    include: {
+      user: {
+        select: {
+          lastName: true,
+          firstName: true,
+          middleName: true,
+          workDepartment: true,
+          workEmploymentType: true
+        }
+      },
+    },
+    orderBy: {
+      date: 'desc'
+    }
+  })
 }
