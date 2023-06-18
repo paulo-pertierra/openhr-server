@@ -11,9 +11,6 @@ import {
 export const userRouter = Router();
 
 userRouter.get('/', userController.getUsers);
-
 userRouter.get('/:uuid', userController.getUserByUuid);
-
 userRouter.post('/', userValidation.validateCreateUser, userController.createUser);
-
 userRouter.delete('/:uuid', userController.deleteUserByUuid);
