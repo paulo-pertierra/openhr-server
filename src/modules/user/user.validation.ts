@@ -39,7 +39,7 @@ export function userUuidIsValid(uuid: string) {
 
 import { clientErrResponseHandler } from '../../utilities/responseHandler';
 import { check, validationResult } from 'express-validator';
-export const validateCreateUser = [
+export const validateUserData = [
   check('username').notEmpty().withMessage('Username is required.'),
   check('password').notEmpty().withMessage('Password is required.'),
   check('lastName').notEmpty().withMessage('Last name is required.'),

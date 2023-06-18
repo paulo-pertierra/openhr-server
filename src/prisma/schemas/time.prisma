@@ -1,9 +1,9 @@
 model Time {
   id String @unique @default(uuid())
   userId String 
+  date String
 
-  recordDate String?
-  remark String
+  remark String?
 
   timeInAm DateTime?
   timeOutAm DateTime?
@@ -11,7 +11,11 @@ model Time {
   timeInPm DateTime?
   timeOutPm DateTime?
 
-  hoursWorked Int?
+  hoursWorkedAm Int @default(0)
+  hoursWorkedPm Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedat DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [uuid], onDelete: Cascade)
 }
