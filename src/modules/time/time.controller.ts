@@ -8,18 +8,23 @@
 import * as timeService from './time.service';
 
 import type { Request, Response, NextFunction } from 'express';
-import { timeFieldIsValid } from './time.validation';
-import { prisma } from '../../utilities/databaseHandler';
+import { timeFieldIsValid, userUuidIsValid } from './time.validation';
 import { Field } from './time.types';
 import { Order } from '../../utilities/types';
-import { responseHandler } from '../../utilities/responseHandler';
+import { clientErrResponseHandler, responseHandler } from '../../utilities/responseHandler';
 
-export const getTimes = async (req:Request, res:Response, next:NextFunction) => {
+export const getTimes = async (req: Request, res: Response, next: NextFunction) => {
   if (timeFieldIsValid(req.query.sortby as string)) {
     const field: Field = req.query.sortby as Field;
     const order: Order = req.query.order as Order;
-    
-    responseHandler(res, await timeService.sortTimesBy(field, order))
+
+    responseHandler(res, await timeService.sortTimesBy(field, order));
   }
-  responseHandler(res, await timeService.getTimes())
-}
+  responseHandler(res, await timeService.getTimes());
+};
+
+export const recordTime = async (req: Request, res: Response, next: NextFunction) => {
+  const uuid = req.params.uuid;
+  if (userUuidIsValid(uuid)) responseHandler(res, await timeService.recordTime(uuid));
+  else clientErrResponseHandler(res, { error: 'UUID is invalid.' });
+};

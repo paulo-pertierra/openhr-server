@@ -7,6 +7,9 @@ const app = express();
 import { configureMiddlewares } from './middlewares/appconfig';
 configureMiddlewares(app);
 
+import { configureSchedules } from './schedules/scheduleconfig';
+configureSchedules();
+
 import { configureRoutes } from './routes/routesconfig';
 configureRoutes(app);
 
