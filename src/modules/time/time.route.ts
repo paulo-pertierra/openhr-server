@@ -12,3 +12,4 @@ import * as timeValidation from './time.validation';
 export const timeRouter = Router();
 
 timeRouter.get('/', timeController.getTimes);
+timeRouter.post('/:uuid', timeController.recordTime);

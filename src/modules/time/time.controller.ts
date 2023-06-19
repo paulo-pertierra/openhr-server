@@ -17,10 +17,13 @@ export const getTimes = async (req: Request, res: Response, next: NextFunction) 
   if (timeFieldIsValid(req.query.sortby as string)) {
     const field: Field = req.query.sortby as Field;
     const order: Order = req.query.order as Order;
-
-    responseHandler(res, await timeService.sortTimesBy(field, order));
+    const date: string = req.query.date as string;
+    responseHandler(res, await timeService.sortTimesBy(field, order, date));
+    return;
   }
-  responseHandler(res, await timeService.getTimes());
+  const date: string = req.query.date as string;
+  responseHandler(res, await timeService.getTimes(date));
+  return;
 };
 
 export const recordTime = async (req: Request, res: Response, next: NextFunction) => {

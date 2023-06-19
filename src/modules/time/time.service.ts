@@ -5,7 +5,7 @@
 import { prisma } from '../../utilities/databaseHandler';
 import * as dateFns from 'date-fns';
 import { Order } from '../../utilities/types';
-import { Field, OrderBy, TimeSchemaDataObj } from './time.types';
+import { Field, FieldWithDate, OrderBy, TimeSchemaDataObj } from './time.types';
 import { timingEngine } from './time.engine';
 
 export async function createTime() {
@@ -38,7 +38,7 @@ export async function recordTime(userId: string) {
   const timeRecord = await prisma.time.findFirst({
     where: {
       userId,
-      date: dateFns.format(new Date(), 'YYYY-MM-DD')
+      date: dateFns.format(new Date(), 'yyyy-MM-dd')
     }
   });
   await prisma.time.update({
@@ -49,12 +49,26 @@ export async function recordTime(userId: string) {
   });
 }
 
-export async function sortTimesBy(field: Field, order: Order) {
-  const orderBy: OrderBy = {};
-  if (orderBy.user) orderBy.user[field] = order;
-  if (orderBy.date) orderBy.date = order;
+export async function sortTimesBy(field: FieldWithDate, order: Order = 'asc', date: string = dateFns.format(new Date(), 'yyyy-MM-dd')) {
+  let orderBy: OrderBy = {};
+  if (field === "date") {
+    orderBy = {
+      date: order
+    }
+  } else {
+    console.log(field);
+    orderBy = {
+      user: {
+        [field]: order
+      }
+    }
+  }
+  console.log(orderBy);
 
   return await prisma.time.findMany({
+    where: {
+      date
+    },
     include: {
       user: {
         select: {
@@ -70,11 +84,15 @@ export async function sortTimesBy(field: Field, order: Order) {
   });
 }
 
-export async function getTimes() {
+export async function getTimes(date: string = dateFns.format(new Date, 'yyyy-MM-dd')) {
   return await prisma.time.findMany({
+    where: {
+      date
+    },
     include: {
       user: {
         select: {
+          uuid: true,
           lastName: true,
           firstName: true,
           middleName: true,
