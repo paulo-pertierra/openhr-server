@@ -49,19 +49,23 @@ export async function recordTime(userId: string) {
   });
 }
 
-export async function sortTimesBy(field: FieldWithDate, order: Order = 'asc', date: string = dateFns.format(new Date(), 'yyyy-MM-dd')) {
+export async function findTimesAndSortBy(
+  field: FieldWithDate,
+  order: Order = 'asc',
+  date: string = dateFns.format(new Date(), 'yyyy-MM-dd')
+) {
   let orderBy: OrderBy = {};
-  if (field === "date") {
+  if (field === 'date') {
     orderBy = {
       date: order
-    }
+    };
   } else {
     console.log(field);
     orderBy = {
       user: {
         [field]: order
       }
-    }
+    };
   }
   console.log(orderBy);
 
@@ -84,7 +88,7 @@ export async function sortTimesBy(field: FieldWithDate, order: Order = 'asc', da
   });
 }
 
-export async function findAllTimes(date: string = dateFns.format(new Date, 'yyyy-MM-dd')) {
+export async function findAllTimes(date: string = dateFns.format(new Date(), 'yyyy-MM-dd')) {
   return await prisma.time.findMany({
     where: {
       date

@@ -20,13 +20,13 @@ export type Field =
   | 'workDepartment'
   | 'workEmploymentType';
 
-export type FieldWithDate = 
-| 'lastName'
-| 'firstName'
-| 'middleName'
-| 'workDepartment'
-| 'workEmploymentType'
-| 'date';
+export type FieldWithDate =
+  | 'lastName'
+  | 'firstName'
+  | 'middleName'
+  | 'workDepartment'
+  | 'workEmploymentType'
+  | 'date';
 
 export type TimeSchemaDataObj = {
   timeInAm?: Date;

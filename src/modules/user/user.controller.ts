@@ -2,7 +2,6 @@
  * This is the Controller. All HTTP Request logic should be here, including validations and error handling.
  * No business logic as much as possible, state changes and business logic is in the services, eg. Calculating time of work.
  * Further reading: Developer Documentation.
- *
  */
 
 import * as userService from './user.service';
@@ -19,7 +18,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const field: Field = req.query.sortby as Field;
     const order: Order = req.query.order as Order;
 
-    responseHandler(res, await userService.sortUsersBy(field, order));
+    responseHandler(res, await userService.findUsersAndSortBy(field, order));
   } else {
     responseHandler(res, await userService.findAllUsers());
   }

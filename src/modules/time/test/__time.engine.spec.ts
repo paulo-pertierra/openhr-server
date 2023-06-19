@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { timingEngine } from '../modules/time/time.engine';
+import { timingEngine } from '../time.engine';
 
 describe('Timing Engine Test', () => {
   it('should return timeInAm for 8am', () => {

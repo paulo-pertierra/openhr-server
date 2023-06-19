@@ -26,7 +26,7 @@ export async function findUserByUuId(uuid: string): Promise<Omit<User, 'password
 
 import type { Order } from '../../utilities/types';
 import type { Field } from './user.types';
-export async function sortUsersBy(field: Field, order: Order = 'desc'): Promise<User[]> {
+export async function findUsersAndSortBy(field: Field, order: Order = 'desc'): Promise<User[]> {
   return await prisma.user.findMany({
     orderBy: {
       [field]: order
