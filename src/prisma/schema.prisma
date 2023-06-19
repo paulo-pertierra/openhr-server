@@ -36,6 +36,7 @@ model User {
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
 	time Time[] @relation(name: "TimeToUser")
+	event Event[] @relation(name: "EventToUser")
 	@@map("users")
 }
 model Training {
@@ -77,7 +78,6 @@ model Admin {
 }
 model Time {
 	id String @unique @default(uuid())
-	userId String 
 	date String 
 	remark String? 
 	timeInAm DateTime? 
@@ -89,6 +89,17 @@ model Time {
 	createdAt DateTime @default(now())
 	updatedat DateTime @updatedAt
 	user User @relation(name: "TimeToUser", fields: [userId], references: [uuid], onDelete: Cascade)
+	userId String 
+}
+model Event {
+	id String @unique @default(uuid())
+	title String 
+	description String? 
+	allDay Boolean 
+	start DateTime 
+	end DateTime? 
+	User User? @relation(name: "EventToUser", fields: [userUuid], references: [uuid])
+	userUuid String? 
 }
 enum WorkRole {
 	EMPLOYEE

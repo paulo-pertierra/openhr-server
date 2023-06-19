@@ -1,6 +1,5 @@
 model Time {
   id String @unique @default(uuid())
-  userId String 
   date String
 
   remark String?
@@ -18,6 +17,7 @@ model Time {
   updatedat DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [uuid], onDelete: Cascade)
+  userId String
 }
 
 model User {

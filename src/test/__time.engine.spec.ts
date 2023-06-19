@@ -1,18 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-
 import { timingEngine } from '../modules/time/time.engine';
-
-// AM
-// 7:00 - 9:00 Time In window
-// 9:01 - 12:15 Time Out window
-
-// PM
-//12:30 - 1:30 Time In Window
-//1:31 - 5:00 Time Out Window
-
-// Hehe, my first tests. Baby steps to become a full-stack senior web dev.
-// Tests
 
 describe('Timing Engine Test', () => {
   it('should return timeInAm for 8am', () => {
@@ -20,7 +8,7 @@ describe('Timing Engine Test', () => {
     const result = timingEngine(new Date(date)); // Lousy conversion!
 
     console.log(result);
-    expect(result).to.have.nested.property('data.timeInAm');
+    expect(result).to.have.nested.property('timeInAm');
   });
 
   it('should return timeOutAm for 10am', () => {
@@ -28,7 +16,7 @@ describe('Timing Engine Test', () => {
     const result = timingEngine(new Date(date)); // Lousy conversion!
 
     console.log(result);
-    expect(result).to.have.nested.property('data.timeOutAm');
+    expect(result).to.have.nested.property('timeOutAm');
   });
 
   it('should return timeInPm for 12:35pm', () => {
@@ -36,7 +24,7 @@ describe('Timing Engine Test', () => {
     const result = timingEngine(new Date(date));
 
     console.log(result);
-    expect(result).to.have.nested.property('data.timeInPm');
+    expect(result).to.have.nested.property('timeInPm');
   });
 
   it('should return timeOutPm for 4:35pm', () => {
@@ -44,7 +32,7 @@ describe('Timing Engine Test', () => {
     const result = timingEngine(new Date(date));
 
     console.log(result);
-    expect(result).to.have.nested.property('data.timeOutPm');
+    expect(result).to.have.nested.property('timeOutPm');
   });
 
   it('should return errror for 6:35pm', () => {

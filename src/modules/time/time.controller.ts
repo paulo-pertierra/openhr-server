@@ -22,7 +22,7 @@ export const getTimes = async (req: Request, res: Response, next: NextFunction) 
     return;
   }
   const date: string = req.query.date as string;
-  responseHandler(res, await timeService.getTimes(date));
+  responseHandler(res, await timeService.findAllTimes(date));
   return;
 };
 

@@ -1,0 +1,16 @@
+model Event {
+  id          String   @unique @default(uuid())
+  title       String
+  description String?
+  allDay      Boolean
+  start       DateTime
+  end         DateTime?
+
+  User        User?    @relation(fields: [userUuid], references: [uuid])
+  userUuid    String?
+}
+
+model User {
+  uuid String  @unique @default(uuid())
+  event Event[]
+}

@@ -84,7 +84,7 @@ export async function sortTimesBy(field: FieldWithDate, order: Order = 'asc', da
   });
 }
 
-export async function getTimes(date: string = dateFns.format(new Date, 'yyyy-MM-dd')) {
+export async function findAllTimes(date: string = dateFns.format(new Date, 'yyyy-MM-dd')) {
   return await prisma.time.findMany({
     where: {
       date
