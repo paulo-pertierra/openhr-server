@@ -18,7 +18,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const field: Field = req.query.sortby as Field;
     const order: Order = req.query.order as Order;
 
-    responseHandler(res, await userService.findUsersAndSortBy(field, order));
+    responseHandler(res, await userService.findAllUsersAndSortBy(field, order));
   } else {
     responseHandler(res, await userService.findAllUsers());
   }

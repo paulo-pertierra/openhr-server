@@ -18,7 +18,7 @@ export const getTimes = async (req: Request, res: Response, next: NextFunction) 
     const field: Field = req.query.sortby as Field;
     const order: Order = req.query.order as Order;
     const date: string = req.query.date as string;
-    responseHandler(res, await timeService.findTimesAndSortBy(field, order, date));
+    responseHandler(res, await timeService.findManyTimesAndSortBy(field, order, date));
     return;
   }
   const date: string = req.query.date as string;

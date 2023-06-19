@@ -14,12 +14,16 @@ export async function findEventsByUser(userUuid: string) {
   });
 }
 
-export async function sortEventsBy(sort: any, order: Order) {
+export async function findAllEventsAndSortBy(field: any, order: Order) {
   return await prisma.event.findMany({
     orderBy: {
-      [sort]: order
+      [field]: order
     }
   });
 }
 
-export async function createEvent(data: Event) {}
+export async function createEvent(data: Event) {
+  return await prisma.event.create({
+    data
+  })
+}
