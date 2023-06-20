@@ -8,8 +8,9 @@ import { Router } from 'express';
 
 import * as timeController from './time.controller';
 import * as timeValidation from './time.validation';
+import { genericErrorHandler, prismaErrorHandler } from '../../middlewares/errorHandler';
 
 export const timeRouter = Router();
 
-timeRouter.get('/', timeController.getTimes);
-timeRouter.post('/:uuid', timeController.recordTime);
+timeRouter.get('/', timeController.getTimes, prismaErrorHandler, genericErrorHandler);
+timeRouter.post('/:uuid', timeController.recordTime, prismaErrorHandler, genericErrorHandler);

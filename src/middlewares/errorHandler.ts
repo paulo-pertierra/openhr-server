@@ -29,6 +29,6 @@ export const prismaErrorHandler: ErrorRequestHandler = (error, req, res, next) =
 };
 
 export const genericErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
-  serverErrResponseHandler(res, { error });
+  serverErrResponseHandler(res, error.message);
   return;
 };

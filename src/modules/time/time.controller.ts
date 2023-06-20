@@ -27,7 +27,11 @@ export const getTimes = async (req: Request, res: Response, next: NextFunction) 
 };
 
 export const recordTime = async (req: Request, res: Response, next: NextFunction) => {
-  const uuid = req.params.uuid;
-  if (userUuidIsValid(uuid)) responseHandler(res, await timeService.recordTime(uuid));
-  else clientErrResponseHandler(res, { error: 'UUID is invalid.' });
+  try {
+    const uuid = req.params.uuid;
+    if (userUuidIsValid(uuid)) responseHandler(res, await timeService.recordTime(uuid));
+    else clientErrResponseHandler(res, { error: 'UUID is invalid.' });
+  } catch (error) {
+    next(error)
+  }
 };

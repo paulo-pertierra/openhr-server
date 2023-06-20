@@ -44,7 +44,7 @@ export function timingEngine(timeOverride: Date): TimeSchemaDataObj {
     };
   }
 
-  return { error: 'Invalid date' };
+  throw new Error('Invalid time input. Reason: out of range.');
 }
 
 // AM

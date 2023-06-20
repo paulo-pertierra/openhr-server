@@ -31,7 +31,9 @@ export const validateEventData = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       clientErrResponseHandler(res, errors, 422);
+      return;
     }
     next();
+    return;
   }
 ];
