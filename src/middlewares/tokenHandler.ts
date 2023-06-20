@@ -1,12 +1,24 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import jwt from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
-const SECRET_KEY: string = process.env.SECRET_KEY || 'secret';
-
-export const generateToken = (userId: string) => {
-  return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '1h' });
+const ADMIN_SECRET_KEY: string =
+  process.env.ADMIN_SECRET_KEY ||
+  'dontleakdontleakdontleakdontleakdontleakdontleakdontleakdontleakdontleakdontleak';
+export const generateAdminToken = (userId: string) => {
+  return sign({ userId }, SECRET_KEY, { expiresIn: '1h' });
 };
 
-export const validateToken = (jwt: string) => {};
+export const validateAdminToken = (jwt: string) => {
+  return verify(jwt, SECRET_KEY);
+};
+
+const SECRET_KEY: string = process.env.SECRET_KEY || 'secret';
+export const generateUserToken = (userId: string) => {
+  return sign({ userId }, ADMIN_SECRET_KEY, { expiresIn: '12h' });
+};
+
+export const validateUserToken = (jwt: string) => {
+  return verify(jwt, ADMIN_SECRET_KEY);
+};

@@ -9,11 +9,18 @@ import { Router, Request, Response } from 'express';
 import * as eventController from './event.controller';
 import * as eventValidation from './event.validation';
 import { responseHandler } from '../../utilities/responseHandler';
+import { genericErrorHandler, prismaErrorHandler } from '../../middlewares/errorHandler';
 
 export const eventRouter = Router();
 
-eventRouter.get('/', eventController.getAllEvents);
-eventRouter.post('/', eventValidation.validateEventData, eventController.createEvent);
+eventRouter.get('/', eventController.getAllEvents, prismaErrorHandler, genericErrorHandler);
+eventRouter.post(
+  '/',
+  eventValidation.validateEventData,
+  eventController.createEvent,
+  prismaErrorHandler,
+  genericErrorHandler
+);
 eventRouter.post('/user/:uuid', (req: Request, res: Response) => {
   responseHandler(res, { message: 'Yep, in construction!' });
 });
