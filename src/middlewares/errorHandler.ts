@@ -10,10 +10,18 @@ export const prismaErrorHandler: ErrorRequestHandler = (error, req, res, next) =
       return;
     }
     if (error.code.match('P2025')) {
-      clientErrResponseHandler(res, { code: error.code, message: "You were trying to edit a record that does not exist." }, 422);
+      clientErrResponseHandler(
+        res,
+        { code: error.code, message: 'You were trying to edit a record that does not exist.' },
+        422
+      );
       return;
     }
-    serverErrResponseHandler(res, { code: error.code, message: 'Congrats! You found a new PrismaClientKnownRequestError. Tell the admins about it so they can catch it. For now it is an error 500'})
+    serverErrResponseHandler(res, {
+      code: error.code,
+      message:
+        'Congrats! You found a new PrismaClientKnownRequestError. Tell the admins about it so they can catch it. For now it is an error 500'
+    });
     return;
   }
   next(error);
@@ -21,6 +29,6 @@ export const prismaErrorHandler: ErrorRequestHandler = (error, req, res, next) =
 };
 
 export const genericErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
-  serverErrResponseHandler(res, {error})
+  serverErrResponseHandler(res, { error });
   return;
-}
+};

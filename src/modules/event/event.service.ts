@@ -25,5 +25,5 @@ export async function findAllEventsAndSortBy(field: any, order: Order) {
 export async function createEvent(data: Event) {
   return await prisma.event.create({
     data
-  })
+  });
 }

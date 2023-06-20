@@ -14,6 +14,6 @@ export const eventRouter = Router();
 
 eventRouter.get('/', eventController.getAllEvents);
 eventRouter.post('/', eventValidation.validateEventData, eventController.createEvent);
-eventRouter.post('/user/:uuid', (req:Request, res:Response) => {
-  responseHandler(res, {message: "Yep, in construction!"})
+eventRouter.post('/user/:uuid', (req: Request, res: Response) => {
+  responseHandler(res, { message: 'Yep, in construction!' });
 });

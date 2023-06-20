@@ -15,6 +15,23 @@ export const userRouter = Router();
 
 userRouter.get('/', userController.getUsers, prismaErrorHandler, genericErrorHandler);
 userRouter.get('/:uuid', userController.getUserByUuid, prismaErrorHandler, genericErrorHandler);
-userRouter.post('/', userValidation.validateCreateUserData, userController.createUser, prismaErrorHandler, genericErrorHandler);
-userRouter.put('/:uuid', userValidation.validateEditUserData, userController.updateUserByUuid, prismaErrorHandler, genericErrorHandler);
-userRouter.delete('/:uuid', userController.deleteUserByUuid, prismaErrorHandler, genericErrorHandler);
+userRouter.post(
+  '/',
+  userValidation.validateCreateUserData,
+  userController.createUser,
+  prismaErrorHandler,
+  genericErrorHandler
+);
+userRouter.put(
+  '/:uuid',
+  userValidation.validateEditUserData,
+  userController.updateUserByUuid,
+  prismaErrorHandler,
+  genericErrorHandler
+);
+userRouter.delete(
+  '/:uuid',
+  userController.deleteUserByUuid,
+  prismaErrorHandler,
+  genericErrorHandler
+);
