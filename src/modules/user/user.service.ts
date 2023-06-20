@@ -58,6 +58,9 @@ export async function updateUserByUuid(data: User, uuid: string): Promise<Omit<U
     where: {
       uuid
     },
-    data
+    data: {
+      ...data,
+      password: bcrypt.hashSync(data.password, 11)
+    }
   });
 }

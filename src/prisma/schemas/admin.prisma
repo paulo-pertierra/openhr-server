@@ -10,4 +10,6 @@ model Admin {
 
   @@unique([username, email])
   @@unique([lastName, firstName, middleName])
+
+  @@map("admins")
 }

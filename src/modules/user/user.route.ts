@@ -9,11 +9,12 @@
 import { Router } from 'express';
 import * as userController from './user.controller';
 import * as userValidation from './user.validation';
+import { prismaErrorHandler, genericErrorHandler } from '../../middlewares/errorHandler';
 
 export const userRouter = Router();
 
-userRouter.get('/', userController.getUsers);
-userRouter.get('/:uuid', userController.getUserByUuid);
-userRouter.post('/', userValidation.validateUserData, userController.createUser);
-userRouter.put('/:uuid', userValidation.validateUserData, userController.updateUserByUuid);
-userRouter.delete('/:uuid', userController.deleteUserByUuid);
+userRouter.get('/', userController.getUsers, prismaErrorHandler, genericErrorHandler);
+userRouter.get('/:uuid', userController.getUserByUuid, prismaErrorHandler, genericErrorHandler);
+userRouter.post('/', userValidation.validateCreateUserData, userController.createUser, prismaErrorHandler, genericErrorHandler);
+userRouter.put('/:uuid', userValidation.validateEditUserData, userController.updateUserByUuid, prismaErrorHandler, genericErrorHandler);
+userRouter.delete('/:uuid', userController.deleteUserByUuid, prismaErrorHandler, genericErrorHandler);

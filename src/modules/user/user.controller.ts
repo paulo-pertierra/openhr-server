@@ -35,14 +35,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
     const data = await userService.createUser(req.body);
     responseHandler(res, { message: 'Success!' }, 201);
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === 'P2002') {
-        error.message = `The ${error.name} should be unique. `;
-        clientErrResponseHandler(res, { error }, 400);
-        return;
-      }
-    }
-    clientErrResponseHandler(res, { error }, 422);
+    next(error);
   }
   return;
 };
@@ -62,7 +55,9 @@ export const updateUserByUuid = async (req: Request, res: Response, next: NextFu
     const uuid = req.params.uuid;
     if (userUuidIsValid(uuid)) await userService.updateUserByUuid(req.body as User, uuid);
     responseHandler(res, { message: 'Success!' });
+    return;
   } catch (error) {
-    clientErrResponseHandler(res, error);
+    next(error);
+    return;
   }
 };

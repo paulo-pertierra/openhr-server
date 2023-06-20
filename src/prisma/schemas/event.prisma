@@ -8,6 +8,8 @@ model Event {
 
   User        User?    @relation(fields: [userUuid], references: [uuid])
   userUuid    String?
+
+  @@map("events")
 }
 
 model User {

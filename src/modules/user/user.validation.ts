@@ -39,7 +39,7 @@ export function userUuidIsValid(uuid: string) {
 
 import { clientErrResponseHandler } from '../../utilities/responseHandler';
 import { check, validationResult } from 'express-validator';
-export const validateUserData = [
+export const validateCreateUserData = [
   check('username').notEmpty().withMessage('Username is required.'),
   check('password').notEmpty().withMessage('Password is required.'),
   check('lastName').notEmpty().withMessage('Last name is required.'),
@@ -80,7 +80,56 @@ export const validateUserData = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       clientErrResponseHandler(res, errors, 422);
+      return;
     }
     next();
+    return;
+  }
+];
+
+export const validateEditUserData = [
+  check('username').optional(),
+  check('password').optional(),
+  check('lastName').optional(),
+  check('firstName').optional(),
+  check('middleName').optional(),
+  check('contactEmail')
+    .optional()
+    .isEmail()
+    .withMessage('Contact email must be a valid email address.'),
+  check('contactNumber').optional(),
+  check('profileGender').optional(),
+  check('profileBirthday')
+    .optional()
+    .isISO8601()
+    .withMessage('Profile birthday must be a valid date.'),
+  check('profileCivilStatus').optional(),
+  check('profileNationality').optional(),
+  check('profileAddress').optional(),
+  check('educationLevel').optional(),
+  check('educationCourse').optional(),
+  check('educationYearStart')
+    .optional()
+    .isInt({ min: 1900 })
+    .withMessage('Education year start must be a valid year.'),
+  check('educationYearGraduate')
+    .optional()
+    .isInt({ min: 1900 })
+    .withMessage('Education year graduate must be a valid year.'),
+  check('educationSchool').optional(),
+  check('workRole').optional(),
+  check('workDepartment').optional(),
+  check('workTitle').optional(),
+  check('workCode').optional(),
+  check('workEmploymentType'),
+  check('workHireDate').optional().isISO8601(),
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      clientErrResponseHandler(res, errors, 422);
+      return;
+    }
+    next();
+    return;
   }
 ];

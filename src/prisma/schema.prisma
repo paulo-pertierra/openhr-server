@@ -37,6 +37,7 @@ model User {
 	updatedAt DateTime @updatedAt
 	time Time[] @relation(name: "TimeToUser")
 	event Event[] @relation(name: "EventToUser")
+	@@unique([firstName, lastName])
 	@@map("users")
 }
 model Training {
@@ -75,6 +76,7 @@ model Admin {
 	middleName String 
 	@@unique([username, email])
 	@@unique([lastName, firstName, middleName])
+	@@map("admins")
 }
 model Time {
 	id String @unique @default(uuid())
@@ -90,6 +92,7 @@ model Time {
 	updatedat DateTime @updatedAt
 	user User @relation(name: "TimeToUser", fields: [userId], references: [uuid], onDelete: Cascade)
 	userId String 
+	@@map("times")
 }
 model Event {
 	id String @unique @default(uuid())
@@ -100,6 +103,7 @@ model Event {
 	end DateTime? 
 	User User? @relation(name: "EventToUser", fields: [userUuid], references: [uuid])
 	userUuid String? 
+	@@map("events")
 }
 enum WorkRole {
 	EMPLOYEE

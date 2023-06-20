@@ -18,6 +18,8 @@ model Time {
 
   user User @relation(fields: [userId], references: [uuid], onDelete: Cascade)
   userId String
+
+  @@map("times")
 }
 
 model User {
