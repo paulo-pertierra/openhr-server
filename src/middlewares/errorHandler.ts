@@ -32,6 +32,7 @@ export const prismaErrorHandler: ErrorRequestHandler = (error, req, res, next) =
 export const genericErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   if (error instanceof AuthError) {
     clientErrResponseHandler(res, error.message, 403);
+    return;
   }
   serverErrResponseHandler(res, error.message);
   return;
