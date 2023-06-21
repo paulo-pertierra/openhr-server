@@ -1,3 +1,3 @@
-import { loginAdmin } from '../modules/auth/admin/auth.admin.service';
+import { createTime } from "../utilities/onetimeRunner";
 
-loginAdmin('admin.paulo.pertierra', '5ba621x4d');
+createTime();

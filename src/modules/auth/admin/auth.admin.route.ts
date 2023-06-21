@@ -14,13 +14,13 @@ import { genericErrorHandler, prismaErrorHandler } from '../../../middlewares/er
 export const authAdminRouter = Router();
 
 authAdminRouter.post(
-  '/admin/login',
+  '/login',
   authAdminValidation.validateAdminLoginData,
   authAdminController.loginAdmin,
   prismaErrorHandler,
   genericErrorHandler
 );
 
-authAdminRouter.post('/admin/createAdmin', (req: Request, res: Response) => {
+authAdminRouter.post('/createAdmin', (req: Request, res: Response) => {
   responseHandler(res, { message: 'Yep, in construction!' });
 });

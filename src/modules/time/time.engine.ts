@@ -1,7 +1,7 @@
 import * as dateFns from 'date-fns';
 import { TimeSchemaDataObj } from './time.types';
 
-export function timingEngine(timeOverride: Date): TimeSchemaDataObj {
+export function timingEngine(timeOverride: Date): string {
   const currentTime = timeOverride;
 
   const timeInAmWindow = {
@@ -9,9 +9,7 @@ export function timingEngine(timeOverride: Date): TimeSchemaDataObj {
     end: new Date().setHours(9)
   };
   if (dateFns.isWithinInterval(currentTime, timeInAmWindow)) {
-    return {
-      timeInAm: currentTime
-    };
+    return 'timeInAm'
   }
 
   const timeOutAmWindow = {
@@ -19,9 +17,7 @@ export function timingEngine(timeOverride: Date): TimeSchemaDataObj {
     end: new Date().setHours(12, 15)
   };
   if (dateFns.isWithinInterval(currentTime, timeOutAmWindow)) {
-    return {
-      timeOutAm: currentTime
-    };
+    return 'timeOutAm'
   }
 
   const timeInPmWindow = {
@@ -29,9 +25,7 @@ export function timingEngine(timeOverride: Date): TimeSchemaDataObj {
     end: new Date().setHours(13, 30)
   };
   if (dateFns.isWithinInterval(currentTime, timeInPmWindow)) {
-    return {
-      timeInPm: currentTime
-    };
+    return 'timeInPm'
   }
 
   const timeOutPmWindow = {
@@ -39,9 +33,7 @@ export function timingEngine(timeOverride: Date): TimeSchemaDataObj {
     end: new Date().setHours(17)
   };
   if (dateFns.isWithinInterval(currentTime, timeOutPmWindow)) {
-    return {
-      timeOutPm: currentTime
-    };
+    return 'timeOutPm'
   }
 
   throw new Error('Invalid time input. Reason: out of range.');

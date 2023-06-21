@@ -7,6 +7,7 @@ import * as dateFns from 'date-fns';
 import { Order } from '../../utilities/types';
 import { Field, FieldWithDate, OrderBy, TimeSchemaDataObj } from './time.types';
 import { timingEngine } from './time.engine';
+import { Time } from '@prisma/client';
 
 export async function createTime() {
   const users = await prisma.user.findMany({
@@ -34,18 +35,43 @@ export async function createTime() {
 
 export async function recordTime(userId: string) {
   // Time in User from 6:30am to 8:30am
-  const data: TimeSchemaDataObj = timingEngine(new Date());
+  const currentTime = new Date()
+  const timeTo: string = timingEngine(currentTime);
   const timeRecord = await prisma.time.findFirst({
     where: {
       userId,
       date: dateFns.format(new Date(), 'yyyy-MM-dd')
     }
   });
+
+  if (timeRecord && timeRecord.timeInAm && timeRecord.timeOutAm) {
+    calculateHoursWorkedAm(timeRecord);
+  }
+
+  if (timeRecord && timeRecord.timeInPm && timeRecord.timeOutPm) {
+    calculateHoursWorkedPm(timeRecord);
+  }
+
+  if (timeTo === 'timeInAm' && timeRecord?.timeInAm !== null) {
+    throw new Error('Timing IN AM.')
+  }
+  if (timeTo === 'timeOutAm' && timeRecord?.timeOutAm !== null) {
+    throw new Error('Timing OUT AM.')
+  }
+  if (timeTo === 'timeInPm' && timeRecord?.timeInPm !== null) {
+    throw new Error('Timing IN PM.')
+  }
+  if (timeTo === 'timeOutPm' && timeRecord?.timeOutPm !== null) {
+    throw new Error('Timing OUT PM.')
+  }
+
   await prisma.time.update({
     where: {
       id: timeRecord?.id
     },
-    data
+    data: {
+      [timeTo]: currentTime
+    }
   });
 }
 
@@ -108,4 +134,28 @@ export async function findAllTimes(date: string = dateFns.format(new Date(), 'yy
       date: 'desc'
     }
   });
+}
+
+
+// Calculate hours
+async function calculateHoursWorkedAm(time: Time) {
+  await prisma.time.update({
+    where: {
+      id: time.id
+    },
+    data: {
+      hoursWorkedAm: Math.abs(dateFns.differenceInHours(time.timeInAm!, time.timeOutAm!))
+    }
+  })
+}
+
+async function calculateHoursWorkedPm(time: Time) {
+  await prisma.time.update({
+    where: {
+      id: time.id
+    },
+    data: {
+      hoursWorkedAm: Math.abs(dateFns.differenceInHours(time.timeInPm!, time.timeOutPm!))
+    }
+  })
 }

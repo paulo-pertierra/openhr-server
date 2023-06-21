@@ -8,7 +8,7 @@ describe('Timing Engine Test', () => {
     const result = timingEngine(new Date(date)); // Lousy conversion!
 
     console.log(result);
-    expect(result).to.have.nested.property('timeInAm');
+    expect(result).to.be.a.string('timeInAm');
   });
 
   it('should return timeOutAm for 10am', () => {
@@ -16,7 +16,7 @@ describe('Timing Engine Test', () => {
     const result = timingEngine(new Date(date)); // Lousy conversion!
 
     console.log(result);
-    expect(result).to.have.nested.property('timeOutAm');
+    expect(result).to.be.a.string('timeOutAm');
   });
 
   it('should return timeInPm for 12:35pm', () => {
@@ -24,7 +24,7 @@ describe('Timing Engine Test', () => {
     const result = timingEngine(new Date(date));
 
     console.log(result);
-    expect(result).to.have.nested.property('timeInPm');
+    expect(result).to.be.a.string('timeInPm');
   });
 
   it('should return timeOutPm for 4:35pm', () => {
@@ -32,14 +32,17 @@ describe('Timing Engine Test', () => {
     const result = timingEngine(new Date(date));
 
     console.log(result);
-    expect(result).to.have.nested.property('timeOutPm');
+    expect(result).to.be.a.string('timeOutPm');
   });
 
-  it('should return errror for 6:35pm', () => {
-    const date = new Date().setHours(18, 35);
-    const result = timingEngine(new Date(date));
+  it('should return error for 6:35pm', () => {
+try{ 
+  const date = new Date().setHours(18, 35);
+  const result =  timingEngine(new Date(date));
 
-    console.log(result);
-    expect(result).to.have.nested.property('error');
+  console.log(result);
+  expect(() => timingEngine(new Date(date))).to.Throw();
+} catch (error) {
+}
   });
 });

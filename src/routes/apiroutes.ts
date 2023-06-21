@@ -12,5 +12,3 @@ export const apiRouter = Router();
 apiRouter.use('/users', userRouter);
 apiRouter.use('/times', timeRouter);
 apiRouter.use('/events', eventRouter);
-apiRouter.use('/auth', authAdminRouter);
-apiRouter.use('/auth', authUserRouter);

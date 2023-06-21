@@ -35,3 +35,19 @@ export type TimeSchemaDataObj = {
   timeOutPm?: Date;
   error?: string;
 };
+
+class TimingEngine {
+  private properties: { [key: string]: any } = {};
+
+  public setProperty(key: string, value: any) {
+    this.properties[key] = value;
+  }
+
+  public getProperty(key: string) {
+    return this.properties[key];
+  }
+
+  public hasOwnProperty(key: string) {
+    return Object.prototype.hasOwnProperty.call(this.properties, key);
+  }
+}
