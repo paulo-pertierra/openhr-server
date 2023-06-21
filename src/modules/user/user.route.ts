@@ -10,13 +10,27 @@ import { Router } from 'express';
 import * as userController from './user.controller';
 import * as userValidation from './user.validation';
 import { prismaErrorHandler, genericErrorHandler } from '../../middlewares/errorHandler';
+import * as authHandler from '../../middlewares/authHandler';
 
 export const userRouter = Router();
 
-userRouter.get('/', userController.getUsers, prismaErrorHandler, genericErrorHandler);
-userRouter.get('/:uuid', userController.getUserByUuid, prismaErrorHandler, genericErrorHandler);
+userRouter.get(
+  '/',
+  authHandler.isLoggedIn,
+  userController.getUsers,
+  prismaErrorHandler,
+  genericErrorHandler
+);
+userRouter.get(
+  '/:uuid',
+  authHandler.isLoggedIn,
+  userController.getUserByUuid,
+  prismaErrorHandler,
+  genericErrorHandler
+);
 userRouter.post(
   '/',
+  authHandler.isAdmin,
   userValidation.validateCreateUserData,
   userController.createUser,
   prismaErrorHandler,
@@ -24,6 +38,7 @@ userRouter.post(
 );
 userRouter.put(
   '/:uuid',
+  authHandler.isLoggedIn,
   userValidation.validateEditUserData,
   userController.updateUserByUuid,
   prismaErrorHandler,
@@ -31,6 +46,7 @@ userRouter.put(
 );
 userRouter.delete(
   '/:uuid',
+  authHandler.isAdmin,
   userController.deleteUserByUuid,
   prismaErrorHandler,
   genericErrorHandler

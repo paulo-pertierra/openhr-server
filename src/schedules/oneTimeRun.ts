@@ -1,3 +1,3 @@
-import { createTime } from "../utilities/onetimeRunner";
+import { createTime } from '../utilities/onetimeRunner';
 
 createTime();

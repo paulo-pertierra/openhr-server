@@ -9,7 +9,7 @@ export function timingEngine(timeOverride: Date): string {
     end: new Date().setHours(9)
   };
   if (dateFns.isWithinInterval(currentTime, timeInAmWindow)) {
-    return 'timeInAm'
+    return 'timeInAm';
   }
 
   const timeOutAmWindow = {
@@ -17,7 +17,7 @@ export function timingEngine(timeOverride: Date): string {
     end: new Date().setHours(12, 15)
   };
   if (dateFns.isWithinInterval(currentTime, timeOutAmWindow)) {
-    return 'timeOutAm'
+    return 'timeOutAm';
   }
 
   const timeInPmWindow = {
@@ -25,7 +25,7 @@ export function timingEngine(timeOverride: Date): string {
     end: new Date().setHours(13, 30)
   };
   if (dateFns.isWithinInterval(currentTime, timeInPmWindow)) {
-    return 'timeInPm'
+    return 'timeInPm';
   }
 
   const timeOutPmWindow = {
@@ -33,7 +33,7 @@ export function timingEngine(timeOverride: Date): string {
     end: new Date().setHours(17)
   };
   if (dateFns.isWithinInterval(currentTime, timeOutPmWindow)) {
-    return 'timeOutPm'
+    return 'timeOutPm';
   }
 
   throw new Error('Invalid time input. Reason: out of range.');

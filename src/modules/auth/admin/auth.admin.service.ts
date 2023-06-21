@@ -17,7 +17,7 @@ export async function loginAdmin(username: string, password: string) {
   const admin = await prisma.admin.findUnique({
     where: {
       username
-    },
+    }
   });
   if (admin === null) {
     throw new AuthError('Username provided was incorrect.');
@@ -27,6 +27,7 @@ export async function loginAdmin(username: string, password: string) {
   }
   return {
     uuid: admin.uuid,
+    role: 'ADMIN',
     jwt: tokenHandler.generateAdminToken(admin.uuid),
     admin: {
       email: admin.email,

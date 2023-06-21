@@ -36,13 +36,12 @@ describe('Timing Engine Test', () => {
   });
 
   it('should return error for 6:35pm', () => {
-try{ 
-  const date = new Date().setHours(18, 35);
-  const result =  timingEngine(new Date(date));
+    try {
+      const date = new Date().setHours(18, 35);
+      const result = timingEngine(new Date(date));
 
-  console.log(result);
-  expect(() => timingEngine(new Date(date))).to.Throw();
-} catch (error) {
-}
+      console.log(result);
+      expect(() => timingEngine(new Date(date))).to.Throw();
+    } catch (error) {}
   });
 });

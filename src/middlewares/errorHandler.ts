@@ -1,6 +1,7 @@
 import { ErrorRequestHandler } from 'express';
 import { clientErrResponseHandler, serverErrResponseHandler } from '../utilities/responseHandler';
 import { Prisma } from '@prisma/client';
+import { AuthError } from '../modules/auth/auth.errors';
 
 export const prismaErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -29,6 +30,9 @@ export const prismaErrorHandler: ErrorRequestHandler = (error, req, res, next) =
 };
 
 export const genericErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
+  if (error instanceof AuthError) {
+    clientErrResponseHandler(res, error.message, 403);
+  }
   serverErrResponseHandler(res, error.message);
   return;
 };

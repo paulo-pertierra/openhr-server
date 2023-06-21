@@ -126,7 +126,7 @@ export const validateEditUserData = [
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      clientErrResponseHandler(res, { error: {errors} } , 422);
+      clientErrResponseHandler(res, { error: { errors } }, 422);
       return;
     }
     next();

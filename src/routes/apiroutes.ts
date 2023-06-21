@@ -5,7 +5,8 @@ import { timeRouter } from '../modules/time/time.route';
 import { eventRouter } from '../modules/event/event.route';
 
 import { authAdminRouter } from '../modules/auth/admin/auth.admin.route';
-import { authUserRouter } from '../modules/auth/user/auth.user.router';
+import { authUserRouter } from '../modules/auth/user/auth.user.route';
+import { isAdmin } from '../auth/isAdmin';
 
 export const apiRouter = Router();
 
