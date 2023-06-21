@@ -24,6 +24,14 @@ export async function findUserByUuId(uuid: string): Promise<Omit<User, 'password
   });
 }
 
+export async function findUsersByFilter(field: Field, value: string) {
+  return await prisma.user.findMany({
+    where: {
+      [field as unknown as string]: value
+    }
+  })
+}
+
 import type { Order } from '../../utilities/types';
 import type { Field } from './user.types';
 export async function findAllUsersAndSortBy(field: Field, order: Order = 'desc'): Promise<User[]> {
@@ -36,7 +44,7 @@ export async function findAllUsersAndSortBy(field: Field, order: Order = 'desc')
 
 import bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
-export async function createUser(data: User): Promise<Omit<User, 'password'>> {
+export async function createUser(data: Omit<User, 'uuid'>): Promise<Omit<User, 'password'>> {
   return await prisma.user.create({
     data: {
       ...data,

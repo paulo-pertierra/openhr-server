@@ -19,9 +19,17 @@ export const getUsers = async (req: Request, res: Response) => {
     const order: Order = req.query.order as Order;
 
     responseHandler(res, await userService.findAllUsersAndSortBy(field, order));
-  } else {
-    responseHandler(res, await userService.findAllUsers());
+    return;
+  } 
+  if (userFieldIsValid(req.query.filterby as unknown as Field)) {
+    const field: Field = req.query.filterby as Field;
+    const value: string = req.query.value as string;
+    
+    responseHandler(res, await userService.findUsersByFilter(field, value));
+    return;
   }
+    responseHandler(res, await userService.findAllUsers());
+    return;
 };
 
 export const getUserByUuid = async (req: Request, res: Response) => {
@@ -29,6 +37,12 @@ export const getUserByUuid = async (req: Request, res: Response) => {
   if (userUuidIsValid(uuid)) responseHandler(res, await userService.findUserByUuId(uuid));
   else clientErrResponseHandler(res, { error: 'UUID is invalid.' });
 };
+
+export const getUserByFilter = (req:Request, res:Response, next:NextFunction) => {
+  const field = req.query.filterby;
+  const value = req.query.value;
+  responseHandler(res, {field, value}) 
+}
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {

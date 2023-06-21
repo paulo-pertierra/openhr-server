@@ -37,6 +37,7 @@ model User {
 	updatedAt DateTime @updatedAt
 	time Time[] @relation(name: "TimeToUser")
 	event Event[] @relation(name: "EventToUser")
+	schedule Schedule[] @relation(name: "ScheduleToUser")
 	@@unique([firstName, lastName])
 	@@map("users")
 }
@@ -104,6 +105,17 @@ model Event {
 	User User? @relation(name: "EventToUser", fields: [userUuid], references: [uuid])
 	userUuid String? 
 	@@map("events")
+}
+model Schedule {
+	id String @unique @default(uuid())
+	title String 
+	description String? 
+	scheduleType ScheduleType 
+	start DateTime 
+	end DateTime? 
+	allDay Boolean 
+	User User? @relation(name: "ScheduleToUser", fields: [userUuid], references: [uuid])
+	userUuid String? 
 }
 enum WorkRole {
 	EMPLOYEE
@@ -339,4 +351,26 @@ enum EmploymentType {
 	FULLTIME
 	PARTTIME
 	ONCALL
+}
+enum ScheduleType {
+	LvAnnual
+	LvSick
+	LvParental
+	LvBereaved
+	LvPaid
+	LvUnpaid
+	LvSpecial
+	LvMedical
+	LvStudy
+	LvOther
+	ObConference
+	ObBusinessMeeting
+	ObClientMeeting
+	ObSiteVisit
+	ObContract
+	ObTraining
+	ObPresentation
+	ObOther
+	OVERTIME
+	UNDERTIME
 }

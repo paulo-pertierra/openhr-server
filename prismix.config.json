@@ -6,7 +6,8 @@
         "src/prisma/schemas/user.prisma",
         "src/prisma/schemas/admin.prisma",
         "src/prisma/schemas/time.prisma",
-        "src/prisma/schemas/event.prisma"
+        "src/prisma/schemas/event.prisma",
+        "src/prisma/schemas/schedule.prisma"
       ],
       "output": "src/prisma/schema.prisma"
     }

@@ -1,0 +1,44 @@
+model Schedule {
+  id String @unique @default(uuid())
+
+  title String
+  description String?
+  scheduleType ScheduleType
+
+  start DateTime
+  end DateTime?
+  allDay Boolean
+
+  User     User?   @relation(fields: [userUuid], references: [uuid])
+  userUuid String?
+}
+
+model User {
+  uuid     String     @unique @default(uuid())
+  schedule Schedule[]
+}
+
+enum ScheduleType {
+  LvAnnual
+  LvSick
+  LvParental
+  LvBereaved
+  LvPaid
+  LvUnpaid
+  LvSpecial
+  LvMedical
+  LvStudy
+  LvOther
+
+  ObConference
+  ObBusinessMeeting
+  ObClientMeeting
+  ObSiteVisit
+  ObContract
+  ObTraining
+  ObPresentation
+  ObOther
+
+  OVERTIME
+  UNDERTIME
+}
