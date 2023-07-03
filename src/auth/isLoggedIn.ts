@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { validateAdminToken, validateAllToken } from '../middlewares/tokenHandler';
 import { clientErrResponseHandler } from '../utilities/responseHandler';
 
-export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];
   if (typeof authHeader !== 'undefined') {
     const jwt = authHeader.split(' ')[1];

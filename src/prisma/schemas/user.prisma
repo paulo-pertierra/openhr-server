@@ -22,7 +22,7 @@ model User {
   educationYearGraduate Int?
   educationSchool       String?
 
-  workRole   WorkRole
+  workRole           WorkRole
   workDepartment     Department
   workTitle          String
   workCode           String?

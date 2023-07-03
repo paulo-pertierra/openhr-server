@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { sign, verify } from 'jsonwebtoken';
+import { AuthError } from '../modules/auth/auth.errors';
 
 const ADMIN_SECRET_KEY: string =
   process.env.ADMIN_SECRET_KEY ||
@@ -30,7 +31,7 @@ export const validateAllToken = (jwt: string) => {
     try {
       return verify(jwt, SECRET_KEY);
     } catch (error) {
-      throw error;
+      throw new AuthError("User is not logged in as any role.");
     }
   }
 };
