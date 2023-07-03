@@ -13,5 +13,6 @@ import { genericErrorHandler, prismaErrorHandler } from '../../middlewares/error
 
 export const timeRouter = Router();
 
+timeRouter.get('/user/:uuid', timeController.getTimesFromUser, prismaErrorHandler, genericErrorHandler)
 timeRouter.get('/', authHandler.isLoggedIn, timeController.getTimes, prismaErrorHandler, genericErrorHandler);
 timeRouter.post('/:uuid', timeController.recordTime, prismaErrorHandler, genericErrorHandler);

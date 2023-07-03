@@ -137,6 +137,14 @@ export async function findAllTimes(date: string = dateFns.format(new Date(), 'yy
   });
 }
 
+export async function findTimesByUserUuid(userId: string) {
+  return await prisma.time.findMany({
+    where: {
+      userId
+    }
+  })
+}
+
 // Calculate hours
 async function calculateHoursWorkedAm(time: Time) {
   await prisma.time.update({

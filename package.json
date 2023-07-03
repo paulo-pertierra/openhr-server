@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "dev": "nodemon src/index.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "day": "ts-node src/routines/oneTimeRun.ts",
+    "set-admin": "ts-node scripts/createAdmin.ts"
   },
   "keywords": [],
   "author": "",

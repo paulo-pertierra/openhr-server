@@ -29,7 +29,7 @@ export async function loginAdmin(username: string, password: string) {
     uuid: admin.uuid,
     role: 'ADMIN',
     jwt: tokenHandler.generateAdminToken(admin.uuid),
-    admin: {
+    profile: {
       email: admin.email,
       lastName: admin.lastName,
       firstName: admin.firstName,
