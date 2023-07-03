@@ -142,7 +142,7 @@ export async function findTimesByUserUuid(userId: string) {
     where: {
       userId
     }
-  })
+  });
 }
 
 // Calculate hours

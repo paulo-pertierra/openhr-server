@@ -1,4 +1,4 @@
-import { createDailyTimeRecord } from "./time.schedule";
+import { createDailyTimeRecord } from './time.schedule';
 
 export function configureSchedules() {
   createDailyTimeRecord();

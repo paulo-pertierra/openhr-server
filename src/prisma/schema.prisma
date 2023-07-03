@@ -114,6 +114,7 @@ model Schedule {
 	start DateTime 
 	end DateTime? 
 	allDay Boolean 
+	status Status @default(Pending)
 	User User? @relation(name: "ScheduleToUser", fields: [userUuid], references: [uuid])
 	userUuid String? 
 }
@@ -373,4 +374,9 @@ enum ScheduleType {
 	ObOther
 	OVERTIME
 	UNDERTIME
+}
+enum Status {
+	Approved
+	Declined
+	Pending
 }
