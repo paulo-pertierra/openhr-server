@@ -7,6 +7,7 @@ import { NextFunction, Request, Response, response } from 'express';
 enum Field {
   userName,
   lastName,
+  firstName,
   middleName,
   workRole,
   profileGender,

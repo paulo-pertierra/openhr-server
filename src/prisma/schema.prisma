@@ -115,7 +115,9 @@ model Schedule {
 	end DateTime? 
 	allDay Boolean 
 	status Status @default(Pending)
-	User User? @relation(name: "ScheduleToUser", fields: [userUuid], references: [uuid])
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
+	user User? @relation(name: "ScheduleToUser", fields: [userUuid], references: [uuid])
 	userUuid String? 
 }
 enum WorkRole {

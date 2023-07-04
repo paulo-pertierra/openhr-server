@@ -31,7 +31,7 @@ export const validateAllToken = (jwt: string) => {
     try {
       return verify(jwt, SECRET_KEY);
     } catch (error) {
-      throw new AuthError("User is not logged in as any role.");
+      throw new AuthError('User is not logged in as any role.');
     }
   }
 };

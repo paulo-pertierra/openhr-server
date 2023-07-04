@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { validateAdminToken, validateAllToken, validateUserToken } from '../middlewares/tokenHandler';
+import {
+  validateAdminToken,
+  validateAllToken,
+  validateUserToken
+} from '../middlewares/tokenHandler';
 import { clientErrResponseHandler } from '../utilities/responseHandler';
 
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {

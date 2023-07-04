@@ -7,7 +7,7 @@ import { isLoggedIn } from '../middlewares/authHandler';
 
 export function configureRoutes(app: Application) {
   app.use('/api', apiRouter);
-  app.use('/ping', isLoggedIn,keepAliveRoute);
+  app.use('/ping', isLoggedIn, keepAliveRoute);
   app.use('/auth', authRouter);
   app.use('/setup', setupRouter);
 }

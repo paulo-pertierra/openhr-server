@@ -22,7 +22,7 @@ export const createSchedule = async (req: Request, res: Response) => {
       start: req.body.start,
       end: req.body.end,
       allDay: req.body.allDay,
-      userUuid: req.params.uuid,
+      userUuid: req.params.userUuid,
       status: 'Pending'
     })
   );

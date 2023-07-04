@@ -2,7 +2,7 @@ import { Schedule, Status } from '@prisma/client';
 import { prisma } from '../../utilities/databaseHandler';
 import { startOfYear, endOfYear, startOfMonth, endOfMonth } from 'date-fns';
 
-export async function createSchedule(data: Omit<Schedule, 'id'>) {
+export async function createSchedule(data: Omit<Schedule, 'id' | 'createdAt' | 'updatedAt'>) {
   return await prisma.schedule.create({
     data
   });
@@ -34,6 +34,9 @@ export async function findManySchedulesYearly(date: Date = new Date()) {
         gte: startOfYear(date),
         lte: endOfYear(date)
       }
+    },
+    include: {
+      user: true
     }
   });
 }
@@ -45,6 +48,9 @@ export async function findManySchedulesMonthly(date: Date = new Date()) {
         gte: startOfMonth(date),
         lte: endOfMonth(date)
       }
+    },
+    include: {
+      user: true
     }
   });
 }

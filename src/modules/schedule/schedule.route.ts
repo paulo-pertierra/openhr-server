@@ -20,7 +20,7 @@ scheduleRouter.get(
   genericErrorHandler
 );
 scheduleRouter.post(
-  '/:uuid',
+  '/:userUuid',
   scheduleValidation.validateScheduleData,
   scheduleController.createSchedule,
   prismaErrorHandler,
