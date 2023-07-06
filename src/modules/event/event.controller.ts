@@ -5,15 +5,24 @@
  *
  */
 
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import * as eventService from './event.service';
 import { responseHandler } from '../../utilities/responseHandler';
 
-export const getAllEvents = async (req: Request, res: Response) => {
-  responseHandler(res, await eventService.findAllEvents());
-  return;
+export const getAllEvents = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    responseHandler(res, await eventService.findAllEvents());
+    return;
+  } catch (error) {
+    next(error);
+    return;
+  }
 };
 
-export const createEvent = async (req: Request, res: Response) => {
-  responseHandler(res, await eventService.createEvent(req.body));
+export const createEvent = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    responseHandler(res, await eventService.createEvent(req.body));
+  } catch (error) {
+    next(error);
+  }
 };

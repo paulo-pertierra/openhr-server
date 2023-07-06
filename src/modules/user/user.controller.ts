@@ -13,45 +13,50 @@ import { Prisma, User } from '@prisma/client';
 import type { Order } from '../../utilities/types';
 import type { Field } from './user.types';
 
-export const getUsers = async (req: Request, res: Response) => {
-  if (userFieldIsValid(req.query.sortby as unknown as Field)) {
-    const field: Field = req.query.sortby as Field;
-    const order: Order = req.query.order as Order;
-
-    responseHandler(res, await userService.findAllUsersAndSortBy(field, order));
+export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    if (userFieldIsValid(req.query.sortby as unknown as Field)) {
+      const field: Field = req.query.sortby as Field;
+      const order: Order = req.query.order as Order;
+  
+      responseHandler(res, await userService.findAllUsersAndSortBy(field, order));
+      return;
+    }
+    if (userFieldIsValid(req.query.filterby as unknown as Field)) {
+      const field: Field = req.query.filterby as Field;
+      const value: string = req.query.value as string;
+      responseHandler(res, await userService.findUsersByFilter(field, value));
+      return;
+    }
+    responseHandler(res, await userService.findAllUsers());
+    return;
+  } catch (error) {
+    next(error);
     return;
   }
-  if (userFieldIsValid(req.query.filterby as unknown as Field)) {
-    const field: Field = req.query.filterby as Field;
-    const value: string = req.query.value as string;
+};
 
-    responseHandler(res, await userService.findUsersByFilter(field, value));
+export const getUserByUuid = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const uuid = req.params.uuid;
+    if (userUuidIsValid(uuid)) responseHandler(res, await userService.findUserByUuId(uuid));
+    else clientErrResponseHandler(res, { error: 'UUID is invalid.' });
+    return;
+  } catch (error) {
+    next(error);
     return;
   }
-  responseHandler(res, await userService.findAllUsers());
-  return;
-};
-
-export const getUserByUuid = async (req: Request, res: Response) => {
-  const uuid = req.params.uuid;
-  if (userUuidIsValid(uuid)) responseHandler(res, await userService.findUserByUuId(uuid));
-  else clientErrResponseHandler(res, { error: 'UUID is invalid.' });
-};
-
-export const getUserByFilter = (req: Request, res: Response, next: NextFunction) => {
-  const field = req.query.filterby;
-  const value = req.query.value;
-  responseHandler(res, { field, value });
 };
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = await userService.createUser(req.body);
     responseHandler(res, { message: 'Success!' }, 201);
+    return;
   } catch (error) {
     next(error);
+    return;
   }
-  return;
 };
 
 export const deleteUserByUuid = async (req: Request, res: Response, next: NextFunction) => {
@@ -59,8 +64,10 @@ export const deleteUserByUuid = async (req: Request, res: Response, next: NextFu
     const uuid = req.params.uuid;
     await userService.deleteUserByUuid(uuid);
     responseHandler(res, { message: 'Success!' }, 204);
+    return;
   } catch (error) {
     clientErrResponseHandler(res, error);
+    return;
   }
 };
 

@@ -25,6 +25,13 @@ export const prismaErrorHandler: ErrorRequestHandler = (error, req, res, next) =
     });
     return;
   }
+  if (error instanceof Prisma.PrismaClientValidationError) {
+    clientErrResponseHandler(res, {
+      code: "Prisma Client Validation Error",
+      message: "Invalid invocation. You may be sending an invalid input to one of API fields."
+    });
+    return;
+  }
   next(error);
   return;
 };
