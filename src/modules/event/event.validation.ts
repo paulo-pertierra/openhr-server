@@ -26,7 +26,7 @@ export const validateEventData = [
   check('description').optional().isString(),
   check('allDay').isBoolean().withMessage('All day value should only be boolean.'),
   check('start').notEmpty().isISO8601().withMessage('Start date or specified date is required.'),
-  check('end').optional().isISO8601(),
+  check('end').optional({ nullable: true }).isISO8601(),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
