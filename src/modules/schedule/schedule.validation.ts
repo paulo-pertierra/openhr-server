@@ -29,7 +29,7 @@ export const validateScheduleData = [
   check('description').optional().isLength({ min: 3, max: 150 }),
   check('scheduleType').notEmpty(),
   check('start').notEmpty().withMessage('Start date is required.').isISO8601(),
-  check('end').optional().isDate(),
+  check('end').optional().isISO8601(),
   check('allDay').notEmpty().default(false).isBoolean().withMessage('All day is boolean only.'),
   check('userUuid').notEmpty().isUUID(4),
   (req: Request, res: Response, next: NextFunction) => {

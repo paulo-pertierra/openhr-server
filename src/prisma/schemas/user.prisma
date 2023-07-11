@@ -288,7 +288,7 @@ model Training {
   date       DateTime
   instructor String
   nature     String
-  User       User?    @relation(fields: [userUuid], references: [uuid])
+  User       User?    @relation(fields: [userUuid], references: [uuid], onDelete: Cascade)
   userUuid   String?
 
   createdAt DateTime @default(now())
@@ -305,7 +305,7 @@ model EmergencyContact {
   contactNumber String
   contactEmail  String
   relationship  String
-  User          User?   @relation(fields: [userUuid], references: [uuid])
+  User          User?   @relation(fields: [userUuid], references: [uuid], onDelete: Cascade)
   userUuid      String?
 
   createdAt DateTime @default(now())

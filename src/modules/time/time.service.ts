@@ -114,10 +114,10 @@ export async function findManyTimesAndSortBy(
   });
 }
 
-export async function findAllTimes(date: string = dateFns.format(new Date(), 'yyyy-MM-dd')) {
+export async function findAllTimes(dateString: string = dateFns.format(new Date(), 'yyyy-MM-dd')) {
   return await prisma.time.findMany({
     where: {
-      date
+      date: { contains: dateString }
     },
     include: {
       user: {
@@ -141,6 +141,9 @@ export async function findTimesByUserUuid(userId: string) {
   return await prisma.time.findMany({
     where: {
       userId
+    },
+    orderBy: {
+      date: 'desc'
     }
   });
 }

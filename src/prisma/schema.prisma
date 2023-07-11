@@ -47,7 +47,7 @@ model Training {
 	date DateTime 
 	instructor String 
 	nature String 
-	User User? @relation(name: "TrainingToUser", fields: [userUuid], references: [uuid])
+	User User? @relation(name: "TrainingToUser", fields: [userUuid], references: [uuid], onDelete: Cascade)
 	userUuid String? 
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
@@ -61,7 +61,7 @@ model EmergencyContact {
 	contactNumber String 
 	contactEmail String 
 	relationship String 
-	User User? @relation(name: "EmergencyContactToUser", fields: [userUuid], references: [uuid])
+	User User? @relation(name: "EmergencyContactToUser", fields: [userUuid], references: [uuid], onDelete: Cascade)
 	userUuid String? 
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
@@ -102,7 +102,7 @@ model Event {
 	allDay Boolean 
 	start DateTime 
 	end DateTime? 
-	User User? @relation(name: "EventToUser", fields: [userUuid], references: [uuid])
+	User User? @relation(name: "EventToUser", fields: [userUuid], references: [uuid], onDelete: Cascade)
 	userUuid String? 
 	@@map("events")
 }
@@ -117,7 +117,7 @@ model Schedule {
 	status Status @default(Pending)
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
-	user User? @relation(name: "ScheduleToUser", fields: [userUuid], references: [uuid])
+	user User? @relation(name: "ScheduleToUser", fields: [userUuid], references: [uuid], onDelete: Cascade)
 	userUuid String? 
 }
 enum WorkRole {

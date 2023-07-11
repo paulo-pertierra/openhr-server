@@ -16,7 +16,7 @@ export const userRouter = Router();
 
 userRouter.get(
   '/',
-  authHandler.isLoggedIn,
+  authHandler.isAdmin,
   userController.getUsers,
   prismaErrorHandler,
   genericErrorHandler

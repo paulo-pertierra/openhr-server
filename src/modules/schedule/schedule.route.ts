@@ -19,6 +19,12 @@ scheduleRouter.get(
   prismaErrorHandler,
   genericErrorHandler
 );
+scheduleRouter.get(
+  '/user/:userUuid',
+  scheduleController.getSchedulesByUserUuid,
+  prismaErrorHandler,
+  genericErrorHandler
+)
 scheduleRouter.post(
   '/:userUuid',
   scheduleValidation.validateScheduleData,

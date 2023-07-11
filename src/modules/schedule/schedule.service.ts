@@ -23,7 +23,7 @@ export async function updateScheduleByUuid(status: Status, id: string) {
     },
     data: {
       status
-    }
+    },
   });
 }
 
@@ -37,6 +37,9 @@ export async function findManySchedulesYearly(date: Date = new Date()) {
     },
     include: {
       user: true
+    },
+    orderBy: {
+      createdAt: 'desc'
     }
   });
 }
@@ -51,6 +54,28 @@ export async function findManySchedulesMonthly(date: Date = new Date()) {
     },
     include: {
       user: true
+    },
+    orderBy: {
+      createdAt: 'desc'
     }
   });
+}
+
+export async function findAllSchedules() {
+  return await prisma.schedule.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
+}
+
+export async function findManySchedulesByUserUuid(userUuid: string) {
+  return await prisma.schedule.findMany({
+    where: {
+      userUuid
+    },
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
 }

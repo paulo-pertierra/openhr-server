@@ -12,6 +12,14 @@ export const getSchedulesByYear = async (req: Request, res: Response) => {
   responseHandler(res, await scheduleService.findManySchedulesYearly());
 };
 
+export const getSchedulesByUserUuid = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    responseHandler(res, await scheduleService.findManySchedulesByUserUuid(req.params.userUuid));
+  } catch (error) {
+    next(error);
+  }
+}
+
 export const createSchedule = async (req: Request, res: Response) => {
   responseHandler(
     res,

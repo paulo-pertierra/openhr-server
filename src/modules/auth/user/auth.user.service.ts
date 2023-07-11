@@ -24,7 +24,9 @@ export async function loginUser(username: string, password: string) {
       email: user.contactEmail,
       lastName: user.lastName,
       firstName: user.firstName,
-      middleName: user.middleName
+      middleName: user.middleName,
+      employmentType: user.workEmploymentType,
+      workRole: user.workRole
     }
   };
 }

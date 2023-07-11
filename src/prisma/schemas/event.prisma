@@ -6,7 +6,7 @@ model Event {
   start       DateTime
   end         DateTime?
 
-  User        User?    @relation(fields: [userUuid], references: [uuid])
+  User        User?    @relation(fields: [userUuid], references: [uuid], onDelete: Cascade)
   userUuid    String?
 
   @@map("events")
